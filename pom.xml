@@ -9,9 +9,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.qureos</groupId>
-    <artifactId>task1</artifactId>
+    <artifactId>timothy_wachiuri</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>task1</name>
+    <name>timothy_wachiuri</name>
     <description>Qureos Task 1 Timothy Wachiuri</description>
     <properties>
         <java.version>1.8</java.version>
