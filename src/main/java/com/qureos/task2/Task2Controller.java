@@ -5,8 +5,10 @@
  */
 package com.qureos.task2;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
-import javax.security.auth.message.callback.PrivateKeyCallback;
+import java.util.ArrayList;
+import java.util.function.Consumer;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -22,17 +24,33 @@ import org.springframework.web.bind.annotation.RestController;
 public class Task2Controller {
 
     @GetMapping("/task2/{movieTitle}")
-    public String index(@PathVariable("movieTitle") String movieTitle) {
+    public ArrayList<String> index(@PathVariable("movieTitle") String movieTitle) throws IOException {
         OkHttpClient client = new OkHttpClient();
-        Request request = new Request.Builder()
-                .url("https://jsonmock.hackerrank.com/api/movies/search/?Title=spiderman&page=1")
-                .build();
 
-        try (Response response = client.newCall(request).execute()) {
-            return response.body().string();
+        int page = 1;
+        int total_pages = 1;
+        ArrayList<String> movieTitles = new ArrayList<>();
+        while (page <= total_pages) {
+            Request request = new Request.Builder()
+                    .url("https://jsonmock.hackerrank.com/api/movies/search/?Title=" + movieTitle + "&page=" + page)
+                    .build();
+
+            try (Response response = client.newCall(request).execute()) {
+                ObjectMapper objectMapper = new ObjectMapper();
+                MoviesResponse moviesResponse = objectMapper.readValue(response.body().string(), MoviesResponse.class);
+
+                total_pages = moviesResponse.getTotal_pages();
+                moviesResponse.getData()
+                        .forEach((Movie movie) -> {
+                            movieTitles.add(movie.Title);
+                });
+
+            }
+            page++;
         }
-        catch(IOException ex){
-            return "Could not reach hackerrank";
-        }
+
+        movieTitles.sort((String o1, String o2) -> o1.compareTo(o2));
+
+        return movieTitles;
     }
 }
