@@ -30,6 +30,10 @@ On your browser make a request to
 http://localhost:8080/task2/spiderman
 ```
 
+## Task 3
+
+SQL query can be found in task3.sql
+
 ## Author
 
 👤 **Timothy Wachiuri**
