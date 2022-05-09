@@ -1,6 +1,4 @@
-# Welcome to Qureos Timothy Wachiuri 👋
-
-> Qureos Timothy Wachiuri
+# Java Spring boot requests 👋
 
 ## Install
 
